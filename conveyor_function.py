@@ -112,3 +112,13 @@ def detect_color(frame_bgr: np.ndarray) -> str:
     if n_yellow >= COLOR_MIN_PX:
         return 'Y'
     return 'NONE'
+@dataclasses.dataclass
+class _PushEvent:
+    fire_time:   float   # sim_time để extend pusher
+    max_retract: float   # safety fallback — retract dù vật chưa clear
+    act_id:      int     # data.ctrl index
+    obj_idx:     int     # object đang bị đẩy (exempt khỏi kinematic override)
+    qpos_adr:    int     # địa chỉ qpos của vật để monitor Y
+    color:       str     # 'R' hoặc 'Y' — để chọn đúng stroke khi fire
+    fired:       bool = False
+    retracted:   bool = False
